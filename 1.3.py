@@ -16,21 +16,7 @@ def crypto_hash(thing):
 check = input("\nEnter hashed password:\n")
 
 
-def okay(check):
-    for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=1):
-        for w in range(1,7):
-            c = ''.join(combination)
-            print(c)
-            c = crypto_hash(c)
-            if c == check:
-                print("-------------------------------\n" + combination + "\n-------------------------------")
-                break
-        else:
-            continue
-        break
-
-
-def this_might_be_it(check):
+def set_a(check):
 
     fire_up_the_jugg = 0
 
@@ -118,4 +104,4 @@ def this_might_be_it(check):
                 break
 
 
-this_might_be_it(check)
+set_a(check)
