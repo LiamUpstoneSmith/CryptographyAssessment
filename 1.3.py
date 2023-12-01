@@ -5,98 +5,117 @@ import itertools
 import hashlib as hash
 
 
-# Works out ASCII value of string mod length of string
-def reduce(thing):
-    p = len(thing)
-    o = 0
-
-    lst = []
-
-    for letter in thing:
-        lst.append(letter)
-
-    for characters in lst:
-        o += ord(characters)
-
-    n = o % p
-    return n
-
-
+# SHA1 hashes given input
 def crypto_hash(thing):
     hasher = hash.sha1(thing.encode())
     c = hasher.hexdigest()
     return c
 
 
-# def hashing(check, combinations):
-#     start_time = time.time()
-#     for w in combinations:
-#         c = crypto_hash(w)
-#         if str(c) == check:
-#             print("-------------------------------\n"+w+"\n-------------------------------")
-#             break
-#         print(w)
-#     else:
-#         print(w)
-#
-#     end_time = time.time()
-#     runtime = round(end_time - start_time, 2)
-#     print("\n", runtime, " Seconds\n")
-
-
-# Creating all possible combinations of alphabet up to length of 6
-# letters = string.digits + string.ascii_uppercase
-# combinations = []
-# for i in range(1, 6):
-#     combinations.extend([''.join(c) for c in itertools.product(letters, repeat=i)])
-
 # user input hashed password to crack
 check = input("\nEnter hashed password:\n")
 
 
-# def bruteforce(check, combinations):
-#     for w in combinations:
-#         for i in range(1, 7):  # Checks 6 links into the chain
-#             c = crypto_hash(w)
-#             if c == check:
-#                 print("-------------------------------\n" + w + "\n-------------------------------")
-#                 break
-#             else:
-#                 c = reduce(c)
-#                 if c == check:
-#                     print("-------------------------------\n" + w + "\n-------------------------------")
-#                     break
-#         else:
-#             continue
-#         break
-
-
-#bruteforce(check, combinations)
-
 def okay(check):
-    for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=6):
+    for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=1):
         for w in range(1,7):
             c = ''.join(combination)
+            print(c)
             c = crypto_hash(c)
             if c == check:
                 print("-------------------------------\n" + combination + "\n-------------------------------")
                 break
-            else:
-                c = reduce(c)
-                if c == check:
-                    print("-------------------------------\n" + combination + "\n-------------------------------")
-                    break
-            print(w)
         else:
             continue
         break
 
 
-okay(check)
+def this_might_be_it(check):
 
-"""
+    fire_up_the_jugg = 0
 
-To-Do:
-Don't think Reduce function is correct
+    # Check if password is 1 character long
+    for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=1):
+        c = ''.join(combination)
+        print(c)
+        c = crypto_hash(c)
+        if c == check:
+            print("-------------------------------\n" + str(combination) + "\n-------------------------------")
+            fire_up_the_jugg = 0
+            break
+        else:
+            fire_up_the_jugg = 1
 
-"""
+    # Check if password is 2 characters long
+    if fire_up_the_jugg == 1:
+        for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=2):
+            c = ''.join(combination)
+            print(c)
+            c = crypto_hash(c)
+            if c == check:
+                answer = ''.join(combination)
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                fire_up_the_jugg = 0
+                break
+            else:
+                fire_up_the_jugg = 2
+
+    # Check if password is 3 characters long
+    if fire_up_the_jugg == 2:
+        for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=3):
+            c = ''.join(combination)
+            print(c)
+            c = crypto_hash(c)
+            if c == check:
+                answer = ''.join(combination)
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                fire_up_the_jugg = 0
+                break
+            else:
+                fire_up_the_jugg = 3
+
+    # Check if password is 4 characters long
+    if fire_up_the_jugg == 3:
+        for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=4):
+            c = ''.join(combination)
+            print(c)
+            c = crypto_hash(c)
+            if c == check:
+                answer = ''.join(combination)
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                fire_up_the_jugg = 0
+                break
+            else:
+                fire_up_the_jugg = 4
+
+    # Check if password is 5 characters long
+    if fire_up_the_jugg == 4:
+        for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=5):
+            c = ''.join(combination)
+            print(c)
+            c = crypto_hash(c)
+            if c == check:
+                answer = ''.join(combination)
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                fire_up_the_jugg = 0
+                break
+            else:
+                fire_up_the_jugg = 5
+
+    # Check if password is 6 characters long
+    if fire_up_the_jugg == 5:
+        for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=6):
+            c = ''.join(combination)
+            print(c)
+            c = crypto_hash(c)
+            if c == check:
+                answer = ''.join(combination)
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                fire_up_the_jugg = 0
+                break
+            else:
+                print("-------------------------------\n" + "Error no password found" + "\n-------------------------------")
+                break
+
+
+this_might_be_it(check)
