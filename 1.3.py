@@ -1,8 +1,11 @@
 # Task 1.3  - Brute Force Password Cracking
 
-import string
 import itertools
 import hashlib as hash
+import time
+
+# Starts timer
+start_time = time.time()
 
 
 # SHA1 hashes given input
@@ -13,7 +16,7 @@ def crypto_hash(thing):
 
 
 # user input hashed password to crack
-check = input("\nEnter hashed password:\n")
+hashed_password = input("\nEnter hashed password:\n")
 
 
 def set_a(check):
@@ -26,11 +29,23 @@ def set_a(check):
         print(c)
         c = crypto_hash(c)
         if c == check:
-            print("-------------------------------\n" + str(combination) + "\n-------------------------------")
+            answer = ''.join(combination)
+            print("-------------------------------\n" + answer + "\n-------------------------------")
             fire_up_the_jugg = 0
+            end_time = time.time()
             break
         else:
-            fire_up_the_jugg = 1
+            for i in range(1000):  # Hashes combination to 1000th level
+                c = crypto_hash(c)
+                if c == check:
+                    answer = ''.join(combination)
+                    print("-------------------------------\n", answer, "Hashed in :", i,
+                          "\n-------------------------------")
+                    fire_up_the_jugg = 0
+                    end_time = time.time()
+                    break
+                else:
+                    fire_up_the_jugg = 1
 
     # Check if password is 2 characters long
     if fire_up_the_jugg == 1:
@@ -42,9 +57,20 @@ def set_a(check):
                 answer = ''.join(combination)
                 print("-------------------------------\n" + answer + "\n-------------------------------")
                 fire_up_the_jugg = 0
+                end_time = time.time()
                 break
             else:
-                fire_up_the_jugg = 2
+                for i in range(1000):  # Hashes combination to 1000th level
+                    c = crypto_hash(c)
+                    if c == check:
+                        answer = ''.join(combination)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        fire_up_the_jugg = 0
+                        end_time = time.time()
+                        break
+                    else:
+                        fire_up_the_jugg = 2
 
     # Check if password is 3 characters long
     if fire_up_the_jugg == 2:
@@ -56,9 +82,20 @@ def set_a(check):
                 answer = ''.join(combination)
                 print("-------------------------------\n" + answer + "\n-------------------------------")
                 fire_up_the_jugg = 0
+                end_time = time.time()
                 break
             else:
-                fire_up_the_jugg = 3
+                for i in range(1000):  # Hashes combination to 1000th level
+                    c = crypto_hash(c)
+                    if c == check:
+                        answer = ''.join(combination)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        fire_up_the_jugg = 0
+                        end_time = time.time()
+                        break
+                    else:
+                        fire_up_the_jugg = 3
 
     # Check if password is 4 characters long
     if fire_up_the_jugg == 3:
@@ -70,9 +107,20 @@ def set_a(check):
                 answer = ''.join(combination)
                 print("-------------------------------\n" + answer + "\n-------------------------------")
                 fire_up_the_jugg = 0
+                end_time = time.time()
                 break
             else:
-                fire_up_the_jugg = 4
+                for i in range(1000):  # Hashes combination to 1000th level
+                    c = crypto_hash(c)
+                    if c == check:
+                        answer = ''.join(combination)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        fire_up_the_jugg = 0
+                        end_time = time.time()
+                        break
+                    else:
+                        fire_up_the_jugg = 4
 
     # Check if password is 5 characters long
     if fire_up_the_jugg == 4:
@@ -84,9 +132,20 @@ def set_a(check):
                 answer = ''.join(combination)
                 print("-------------------------------\n" + answer + "\n-------------------------------")
                 fire_up_the_jugg = 0
+                end_time = time.time()
                 break
             else:
-                fire_up_the_jugg = 5
+                for i in range(1000):  # Hashes combination to 1000th level
+                    c = crypto_hash(c)
+                    if c == check:
+                        answer = ''.join(combination)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        fire_up_the_jugg = 0
+                        end_time = time.time()
+                        break
+                    else:
+                        fire_up_the_jugg = 5
 
     # Check if password is 6 characters long
     if fire_up_the_jugg == 5:
@@ -98,10 +157,29 @@ def set_a(check):
                 answer = ''.join(combination)
                 print("-------------------------------\n" + answer + "\n-------------------------------")
                 fire_up_the_jugg = 0
+                end_time = time.time()
                 break
             else:
-                print("-------------------------------\n" + "Error no password found" + "\n-------------------------------")
-                break
+                for i in range(1000):  # Hashes combination to 1000th level
+                    c = crypto_hash(c)
+                    if c == check:
+                        answer = ''.join(combination)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        fire_up_the_jugg = 0
+                        end_time = time.time()
+                        break
+                    else:
+                        print(
+                            "-------------------------------\n" + "Error no password found" +
+                            "\n-------------------------------")
+                        break
+
+    # Calculates and prints time taken for algorithm to complete
+    overall_time = end_time - start_time
+    overall_mins = overall_time / 60
+    print("\n", overall_time, " Seconds to complete")
+    print("\n", overall_mins, " mins to complete")
 
 
-set_a(check)
+set_a(hashed_password)
