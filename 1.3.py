@@ -1,33 +1,13 @@
 # Task 1.3  - Brute Force Password Cracking
 
-"""
-
-Set A Test Cases:
-
-MAKE  --  1029 seconds  --  17.16 mins  --  5f4395a75c71fe04b6156d6290da65a27f17e138
-
-1YOUR1  --  49523 seconds  --  825.4 mins  --  13.75 hours  --  16607928013478be20d30ccd60d958149bd48541
-
-PWD5  --  1268 seconds  --  21.14 mins  --  74fcb3939fb7460f1e6a00a32ca45510ebff9ffa
-
-LONGER  --  75734 seconds  --  1262 mins --  21.03 hours  --  88765f800a890eef93767f976eca17f91cbf85ea
-
-4 --  6.51 seconds --  1b6453892473a467d07372d45eb05abc2031647a
-
-BETTER  --  70725 seconds  --  1178.76 mins  --  19.65 hours  --  3bb9cdac38c5c43cd6cbe4752c40041d58894545
-
-SECRET  --  75187 seconds  --  1253.13 mins  --  20.89 hours  --  3c3b274d119ff5a5ec6c1e215c1cb794d9973ac1  THE PC CODE RUNNING
-
-"""
-
 import itertools
-import hashlib as hash
+import hashlib
 import time
 
 
 # SHA1 hashes given input
 def sha1_hash(thing):
-    hasher = hash.sha1(thing.encode())
+    hasher = hashlib.sha1(thing.encode())
     c = hasher.hexdigest()
     return c
 
@@ -226,7 +206,7 @@ def set_b(check):
     start_time = time.time()
 
     # Checks every combination of length 6
-    for combination in itertools.product('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', repeat=6):
+    for combination in itertools.product('0123456789', repeat=6):
         c = ''.join(combination)
         print(c)
 
@@ -257,4 +237,114 @@ def set_b(check):
     print("\n", overall_mins, " mins to complete")
 
 
-set_b(hashed_password)
+# Creates Valid BCH code based on input
+def valid_bch(check):
+
+    # Define list d
+    d = []
+
+    d = [int(digit) for digit in check]
+
+    # Appends the redundancy digits, based on relevant formulas.
+    d.append(((4 * d[0]) + (10 * d[1]) + (9 * d[2]) + (2 * d[3]) + (1 * d[4]) + (7 * d[5])) % 11)
+    d.append(((7 * d[0]) + (8 * d[1]) + (7 * d[2]) + (1 * d[3]) + (9 * d[4]) + (6 * d[5])) % 11)
+    d.append(((9 * d[0]) + (1 * d[1]) + (7 * d[2]) + (8 * d[3]) + (7 * d[4]) + (7 * d[5])) % 11)
+    d.append(((1 * d[0]) + (2 * d[1]) + (9 * d[2]) + (10 * d[3]) + (4 * d[4]) + (1 * d[5])) % 11)
+
+    return d
+
+
+def set_c(check):
+
+    # Starts timer
+    start_time = time.time()
+
+    usable = True
+
+    # Checks every combination of length 6
+    for combination in itertools.product('0123456789', repeat=6):
+        c = ''.join(combination)
+        print(c)
+
+        # Creates BCH code from input
+        d = valid_bch(combination)
+
+        for i in d[6:]:
+            if i >= 10:
+                usable = False
+                break
+            else:
+                usable = True
+
+        if usable:
+            c = ''.join(str(d))
+            c = sha1_hash(c)
+            if c == check:
+                answer = ''.join(str(d))
+                print("-------------------------------\n" + answer + "\n-------------------------------")
+                end_time = time.time()
+                break
+            else:
+                for i in range(1000):  # Hashes combination up to 1000th level
+                    c = sha1_hash(c)
+                    if c == check:
+                        answer = ''.join(d)
+                        print("-------------------------------\n", answer, "Hashed in :", i,
+                              "\n-------------------------------")
+                        end_time = time.time()
+                        break
+
+    # Calculates and prints time taken for algorithm to complete
+    overall_secs = end_time - start_time
+    overall_mins = overall_secs / 60
+    overall_secs = round(overall_secs, 2)
+    overall_mins = round(overall_mins, 2)
+    print("\n", overall_secs, " Seconds to complete")
+    print("\n", overall_mins, " mins to complete")
+
+
+set_c(hashed_password)
+
+"""
+
+Set A Test Cases:
+
+MAKE  --  1029 seconds  --  17.16 mins  --  5f4395a75c71fe04b6156d6290da65a27f17e138
+
+1YOUR1  --  49523 seconds  --  825.4 mins  --  13.75 hours  --  16607928013478be20d30ccd60d958149bd48541
+
+PWD5  --  1268 seconds  --  21.14 mins  --  74fcb3939fb7460f1e6a00a32ca45510ebff9ffa
+
+LONGER  --  75734 seconds  --  1262 mins --  21.03 hours  --  88765f800a890eef93767f976eca17f91cbf85ea
+
+4 --  6.51 seconds --  1b6453892473a467d07372d45eb05abc2031647a
+
+BETTER  --  70725 seconds  --  1178.76 mins  --  19.65 hours  --  3bb9cdac38c5c43cd6cbe4752c40041d58894545
+
+SECRET  --  75187 seconds  --  1253.13 mins  --  20.89 hours  --  3c3b274d119ff5a5ec6c1e215c1cb794d9973ac1
+
+"""
+
+"""
+
+Set B Test Cases:
+
+123456  --  16.14 seconds  -- 7c4a8d09ca3762af61e59520943dc26494f8941b
+
+987654  --  130.87 seconds  --  dea742e166979027ae70b28e0a9006fb1010e760
+
+381241  --  49.86 seconds  --  68952957dede23fe1fe06eb71d97f01bacb34197
+
+999992  --  132.01 seconds  -- 2a81b68e789b1a4681e05d1d3dc1a73625b8e5eb
+
+246804  --  32.26 seconds  --  1b88ec85ffa1160d60fd7d8a58caa73e7184bcf6
+
+"""
+
+"""
+
+Set C Test Cases:
+
+
+
+"""
