@@ -5,15 +5,15 @@ import hashlib
 import time
 
 
+# User input hashed password to crack
+hashed_password = input("\nEnter hashed password:\n")
+
+
 # SHA1 hashes given input
 def sha1_hash(thing):
     hasher = hashlib.sha1(thing.encode())
     c = hasher.hexdigest()
     return c
-
-
-# user input hashed password to crack
-hashed_password = input("\nEnter hashed password:\n")
 
 
 def set_a(check):
@@ -237,19 +237,19 @@ def set_b(check):
     print("\n", overall_mins, " mins to complete")
 
 
-# Creates Valid BCH code based on input
-def valid_bch(check):
+# Creates Valid BCH parity bits based on input
+def valid_bch(combo):
 
     # Define list d
     d = []
 
-    d = [int(digit) for digit in check]
+    d = [int(digit) for digit in combo]
 
     # Appends the redundancy digits, based on relevant formulas.
-    d.append(((4 * d[0]) + (10 * d[1]) + (9 * d[2]) + (2 * d[3]) + (1 * d[4]) + (7 * d[5])) % 11)
-    d.append(((7 * d[0]) + (8 * d[1]) + (7 * d[2]) + (1 * d[3]) + (9 * d[4]) + (6 * d[5])) % 11)
-    d.append(((9 * d[0]) + (1 * d[1]) + (7 * d[2]) + (8 * d[3]) + (7 * d[4]) + (7 * d[5])) % 11)
-    d.append(((1 * d[0]) + (2 * d[1]) + (9 * d[2]) + (10 * d[3]) + (4 * d[4]) + (1 * d[5])) % 11)
+    d.append((4 * d[0] + 10 * d[1] + 9 * d[2] + 2 * d[3] + 1 * d[4] + 7 * d[5]) % 11)
+    d.append((7 * d[0] + 8 * d[1] + 7 * d[2] + 1 * d[3] + 9 * d[4] + 6 * d[5]) % 11)
+    d.append((9 * d[0] + 1 * d[1] + 7 * d[2] + 8 * d[3] + 7 * d[4] + 7 * d[5]) % 11)
+    d.append((1 * d[0] + 2 * d[1] + 9 * d[2] + 10 * d[3] + 4 * d[4] + 1 * d[5]) % 11)
 
     return d
 
@@ -258,8 +258,6 @@ def set_c(check):
 
     # Starts timer
     start_time = time.time()
-
-    usable = True
 
     # Checks every combination of length 6
     for combination in itertools.product('0123456789', repeat=6):
@@ -277,7 +275,7 @@ def set_c(check):
                 usable = True
 
         if usable:
-            c = ''.join(str(d))
+            c = ''.join(map(str, d))
             c = sha1_hash(c)
             if c == check:
                 answer = ''.join(str(d))
@@ -345,6 +343,12 @@ Set B Test Cases:
 
 Set C Test Cases:
 
+9999984630  -- 618 seconds -- 10.31 mins -- c65ae8e178575337c340a501c09e0f3fc5410d2f
 
+1234573350  --  71 seconds  --  ea5eec7aa4cbc9a8ae54fd24a4c7ab26b39fc82a
+
+7653013937  --  494 seconds  --  8.24 mins  --  6e72cda843dc64e1fe5b49243eeb1d6d1ec71509
+
+9943026227  --  625 seconds  --  10.42 mins  --  c09108cc36c9de18012a1db7c88657ac5636b768
 
 """
