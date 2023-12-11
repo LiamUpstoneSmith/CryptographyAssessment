@@ -11,14 +11,14 @@ def six_digit_isbn():
     if len(d) < 5 or len(d) > 6:
 
         print("Enter valid 6 digit code.")
-        six_digit_isbn() # Uses recursion to start again if invalid input
+        six_digit_isbn()  # Uses recursion to start again if invalid input
 
     # Adds error correction digit if needed
     if len(d) == 5:
         remainder = (d[0]+d[1]+d[2]+d[3]+d[4]) % 5
-        bongo = 5 - remainder
-        print("\nAdding", bongo, "to array.")
-        d.append(bongo)
+        error_correction = 5 - remainder
+        print("\nAdding", error_correction, "to array.")
+        d.append(error_correction)
 
     # Checks if valid ISBN num
     if len(d) == 6:

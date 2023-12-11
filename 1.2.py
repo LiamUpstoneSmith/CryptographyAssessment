@@ -93,6 +93,7 @@ def decoder(codeword):
 
         elif p != 0 or q != 0 or r != 0:  # if there are 2 errors
 
+            # Finding i value
             i1 = ((q**2)-(4*p*r)) % 11
             if i1 % 11 in no_s or (i1 % 11) > 10:
                 print("\nTwo or more errors\n")
@@ -111,7 +112,7 @@ def decoder(codeword):
 
             i = (i3 * y) % 11
 
-            # Work out J value
+            # Finding j Value
             j1 = ((q**2)-(4*p*r)) % 11
             if j1 % 11 in no_s or (j1 % 11) > 10:
                 print("\nTwo or more errors\n")

@@ -267,6 +267,7 @@ def set_c(check):
         # Creates BCH code from input
         d = valid_bch(combination)
 
+        # Checks if numbers are usable (no number is greater than 10)
         for i in d[6:]:
             if i >= 10:
                 usable = False
@@ -305,7 +306,7 @@ set_c(hashed_password)
 
 """
 
-Set A Test Cases:
+Set A Test Cases:   2,341,295 possible combinations
 
 MAKE  --  1029 seconds  --  17.16 mins  --  5f4395a75c71fe04b6156d6290da65a27f17e138
 
