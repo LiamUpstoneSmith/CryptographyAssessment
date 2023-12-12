@@ -38,7 +38,11 @@ def generator():
 
 
 # Decodes BCH code
-def decoder(codeword):
+def decoder():
+
+    # Take User input to be decoded
+    user_input = input("Enter a 10-digit number: \n")
+    codeword = [int(digit) for digit in user_input]
 
     # List of numbers with no square root
     no_s = [2, 6, 7, 8, 10]
@@ -159,4 +163,4 @@ def decoder(codeword):
             twoOrLessErrors = False # Stops the While Loop
 
 
-generator()
+decoder()
