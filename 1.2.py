@@ -1,6 +1,5 @@
 # Task 1.2 - BCH Generating and Correcting.
 
-
 # Generates parity data for valid BCH code
 def generator():
 
@@ -60,8 +59,6 @@ def decoder():
         p = ((syndrome_2 ** 2) - (syndrome_1 * syndrome_3)) % 11
         q = ((syndrome_1 * syndrome_4) - (syndrome_2 * syndrome_3)) % 11
         r = ((syndrome_3 ** 2) - (syndrome_2 * syndrome_4)) % 11
-        print("p, q, r:\n", p, q, r)
-        print("syndromes 1-4:\n", syndrome_1, syndrome_2, syndrome_3, syndrome_4)
 
         if syndrome_1 == 0 and syndrome_2 == 0 and syndrome_3 == 0 and syndrome_4 == 0:  # Checks no error occurred
 
@@ -86,13 +83,10 @@ def decoder():
             # Fixes error at correct position by the calculated magnitude
             codeword[err_pos - 1] -= magnitude
 
-            # Printing out values
-            print("\nHolder: ", inverse)
-            print("Mag:", magnitude)
-            print("\nerror position", err_pos)
-
             # Prints out new fixed codeword
-            print("\nSingle error,\nNew codeword:\n", codeword)
+            print("--------------------------------------------")
+            print("\nSingle error,\nNew codeword:")
+            print(codeword)
             twoOrLessErrors = False  # Stops the While Loop
 
         elif p != 0 or q != 0 or r != 0:  # if there are 2 errors
@@ -157,10 +151,10 @@ def decoder():
             codeword[i - 1] = new_i
             codeword[j - 1] = new_j
 
-            print("\nPosition 1 (i): ", i, " Magnitude a: ", a)
-            print("\nPosition 2 (j): ", j, " Magnitude b: ", b)
-            print("\nDouble error,\nNew codeword:\n", codeword)
-            twoOrLessErrors = False # Stops the While Loop
+            print("--------------------------------------------")
+            print("\nDouble error,\nNew codeword:")
+            print(codeword)
+            twoOrLessErrors = False  # Stops the While Loop
 
 
 decoder()
